@@ -40,8 +40,8 @@ class PersonController extends Controller
     {
         $person = new Person();
         $person->name = $request->name;
-        $person->name = $request->name;
-        $person->name = $request->name;
+        $person->mail = $request->mail;
+        $person->age = $request->age;
         $person->save();
         return view('person.show', ['person' => $person]);
     }
@@ -79,6 +79,12 @@ class PersonController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $person = Person::find($id);
+        $person->name = $request->name;
+        $person->mail = $request->mail;
+        $person->age = $request->age;
+        $person->save();
+        return view('person.show', ['person' => $person]);
     }
 
     /**
