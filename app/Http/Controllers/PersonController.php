@@ -38,10 +38,19 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validate_rule = [
+            'name' => 'required',
+            'mail' => 'email',
+            'age' => 'numeric|between:0,150'
+        ];
+        $this->validate($request, $validate_rule);
+
         $person = new Person();
         $person->name = $request->name;
         $person->mail = $request->mail;
         $person->age = $request->age;
+
         $person->save();
         return view('person.show', ['person' => $person]);
     }
@@ -83,6 +92,14 @@ class PersonController extends Controller
         $person->name = $request->name;
         $person->mail = $request->mail;
         $person->age = $request->age;
+
+        $validate_rule = [
+            'name' => 'required',
+            'mail' => 'email',
+            'age' => 'numeric|between:0,150'
+        ];
+        $this->validate($request, $validate_rule);
+
         $person->save();
         return view('person.show', ['person' => $person]);
     }
@@ -95,6 +112,8 @@ class PersonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $person = Person::find($id);
+        $person->delete();
+        return redirect('person');
     }
 }
