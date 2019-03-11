@@ -1,13 +1,8 @@
-<!DOCTYPE html >
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Person/Show</title>
-</head>
-<body>
-<div class="container">
-    <h1>詳細</h1>
+@extends('layouts.laravelapp')
+
+@section('title', 'Edit')
+
+@section('content')
 
     @if (count($errors) > 0)
     <div>
@@ -19,7 +14,7 @@
     </div>
     @endif
 
-    <form method="post" action="{{ '/person/' . $person->id }}" class="form-horizontal">
+    <form method="post" action="{{ '/person/' . $person->id }}" class="form-horizontal"  style="display:inline;">
         @csrf
         @method('PUT')
         <input type="hidden" name="id" value="{{ $person->id }}">
@@ -38,16 +33,13 @@
         </div>
         <button type="submit" name="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </form>
-    <form action="{{ '/person/'. $person->id }}" method="post">
+    <form action="{{ '/person/'. $person->id }}" method="post"  style="display:inline;">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger">
             {{ __('Delete') }}
         </button>
     </form>
-    <a class="btn btn-primary" href="{{ '/person' }}">{{ __('Index') }}</a>
+    <a class="btn btn-info" href="{{ '/person' }}">{{ __('Index') }}</a>
 
-
-</div>
-</body>
-</html>
+@endsection
