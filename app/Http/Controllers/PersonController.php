@@ -39,12 +39,7 @@ class PersonController extends Controller
     public function store(Request $request)
     {
 
-        $validate_rule = [
-            'name' => 'required',
-            'mail' => 'email',
-            'age' => 'numeric|between:0,150'
-        ];
-        $this->validate($request, $validate_rule);
+        $this->validateForm($request);
 
         $person = new Person();
         $person->name = $request->name;
@@ -88,17 +83,12 @@ class PersonController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validateForm($request);
+
         $person = Person::find($id);
         $person->name = $request->name;
         $person->mail = $request->mail;
         $person->age = $request->age;
-
-        $validate_rule = [
-            'name' => 'required',
-            'mail' => 'email',
-            'age' => 'numeric|between:0,150'
-        ];
-        $this->validate($request, $validate_rule);
 
         $person->save();
         return view('person.show', ['person' => $person]);
@@ -115,5 +105,19 @@ class PersonController extends Controller
         $person = Person::find($id);
         $person->delete();
         return redirect('person');
+    }
+
+    /**
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function validateForm(Request $request): void
+    {
+        $validate_rule = [
+            'name' => 'required',
+            'mail' => 'email',
+            'age' => 'numeric|between:0,150'
+        ];
+        $this->validate($request, $validate_rule);
     }
 }
